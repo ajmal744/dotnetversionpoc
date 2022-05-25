@@ -1,0 +1,22 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  
+steps:
+- script: dotnet build --configuration $(buildConfiguration) 
+  displayName: Build
+
+- script: dotnet publish --no-build -o "$(Build.ArtifactStagingDirectory)" --configuration $(buildConfiguration)
+  displayName: Publish
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Build
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'drop'
+    publishLocation: 'Container'
