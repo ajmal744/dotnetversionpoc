@@ -19,7 +19,7 @@ steps:
 - script: nbgv cloud
   displayName: Set Version
 
-- script: dotnet build --configuration $(buildConfiguration)
+- script: dotnet build --configuration $(buildConfiguration) /p:PublicRelease=true
   displayName: Build
 
 - script: dotnet publish --no-build -o "$(Build.ArtifactStagingDirectory)" --configuration $(buildConfiguration)
